@@ -38,15 +38,14 @@ function clkHwy(e) {
 	featureName = '<p>Type: ' + props.Type + '</p>',
 	featureClass = 'hwycl',
 	featureIcon = 'hwyicon icon';
-	contentPush(header,content,featureName,featureClass,featureIcon);
-};
+	contentPush(header,content,featureName,featureClass,featureIcon);};
 //  truck parking
 function clkParking(e) {
 	initializeHL(e);
 	header = '<p>' + props.Name + '</p>',
-	content = "<div id='baseInfo'>"
-                        +"<div class='datafield'>" + props.Owner+ "</div><div class='labelfield'>Owner</div>"
-                        +"<div class='datafield'>" + props.Operator_s + "</div><div class='labelfield'>Operator(s)</div>"
+	content = "<div id='baseInfo'>"+
+                        "<div class='datafield'>" + props.Owner+ "</div><div class='labelfield'>Owner</div>"+
+                        "<div class='datafield'>" + props.Operator_s + "</div><div class='labelfield'>Operator(s)</div>"
                         +"<div class='datafield'>" + props.Township_s + "</div><div class='labelfield'>Municipality(ies)</div>"
                         +"</div><!--close baseInfo-->"
                         +"<div class='infoDivider'></div>"
@@ -545,13 +544,13 @@ function clkfgneighbor(e) {
                 window.location.hash = countyHash;
                 
                 var slideshow = "<ul class='bxslider'><li><img src='lib/images/county/small/"+ props.NAME +"/1.jpg'  title='"+props.one+"' /></li>"
-                		+"<li><img src='lib/images/county/small/"+ props.NAME +"/2.jpg' title='"+props.two+"' /></li>"
-                		+"<li><img src='lib/images/county/small/"+ props.NAME +"/3.jpg' title='"+props.three+"' /></li>"
-                		+"<li><img src='lib/images/county/small/"+ props.NAME +"/4.jpg' title='"+props.four+"' /></li>"
-                		+"<li><img src='lib/images/county/small/"+ props.NAME +"/5.jpg' title='"+props.five+"' /></li>"
-                		+"<li><img src='lib/images/county/small/"+ props.NAME +"/6.jpg' title='"+props.six+"' /></li>"
-                		+"<li><img src='lib/images/county/small/"+ props.NAME +"/7.jpg' title='"+props.seven+"' /></li>"
-                		+"<li><img src='lib/images/county/small/"+ props.NAME +"/8.jpg' title='"+props.eight+"' /></li></ul>";
+                		+"<li><img src='lib/dist/images/county/small/"+ props.NAME +"/2.jpg' title='"+props.two+"' /></li>"
+                		+"<li><img src='lib/dist/images/county/small/"+ props.NAME +"/3.jpg' title='"+props.three+"' /></li>"
+                		+"<li><img src='lib/dist/images/county/small/"+ props.NAME +"/4.jpg' title='"+props.four+"' /></li>"
+                		+"<li><img src='lib/dist/images/county/small/"+ props.NAME +"/5.jpg' title='"+props.five+"' /></li>"
+                		+"<li><img src='lib/dist/images/county/small/"+ props.NAME +"/6.jpg' title='"+props.six+"' /></li>"
+                		+"<li><img src='lib/dist/images/county/small/"+ props.NAME +"/7.jpg' title='"+props.seven+"' /></li>"
+                		+"<li><img src='lib/dist/images/county/small/"+ props.NAME +"/8.jpg' title='"+props.eight+"' /></li></ul>";
 
                 $('#ctyDataName').html(''+ props.NAME +' County');
                 $('#data-1').html(''+ props.IntRouteMi +'');

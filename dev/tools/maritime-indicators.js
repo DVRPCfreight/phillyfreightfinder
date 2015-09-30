@@ -110,10 +110,10 @@ $(function() {
                             word,
                             line = [],
                             lineNumber = 0,
-                            lineHeight = .9, // ems
+                            lineHeight = 0.9, // ems
                             x = text.attr("x"),
                             y = text.attr("y"),
-                            dy = .35, //parseFloat(text.attr("dy")),
+                            dy = 0.35, //parseFloat(text.attr("dy")),
                             tspan = text.text(null)
                                         .append("tspan")
                                         .attr("class","mi-child")
@@ -160,7 +160,7 @@ $(function() {
                     var minSize = d3.min(scaleRange),
                         maxSize = d3.max(scaleRange),
                         portScale = d3.scale.pow()
-                        .exponent(.8)
+                        .exponent(0.8)
                         .domain([minSize, maxSize])
                         .range([5, 19]);
                             
@@ -340,13 +340,13 @@ $(function() {
                 // *******************************************
                 // maritime trade chart functions
                 function formatYvalues(n) {
-                    var value = n * .000001 + ' M';
-                    return value
+                    var value = n * 0.000001 + ' M';
+                    return value;
                 }
 
                 function formatY0values(n) {
-                    var value = n * .001 + ' k';
-                    return value
+                    var value = n * 0.001 + ' k';
+                    return value;
                 }
 
                 // ****************************************
@@ -375,7 +375,7 @@ $(function() {
                     });
 
                     var maxDataYear = d3.max(data, function(d) {
-                        return d.year
+                        return d.year;
                     });
                     miYear = maxDataYear - 1;
                     $('#mi-year-select').html(miYear + ' <span class="caret"></span>');
@@ -411,7 +411,7 @@ $(function() {
                             return d3.max(d.values, function(d) {
                                 return d.label;
                             });
-                        })
+                        });
 
                     //push to label
                     $('#mi-trade-date-min').html(minYear.getFullYear());
@@ -429,7 +429,7 @@ $(function() {
 
                     y0.domain([0, d3.max(containers, function(d) {
                         return Math.max(d.value);
-                    })])
+                    })]);
 
                     var selection = svg.selectAll(".series")
                         .data(seriesArr)
@@ -532,7 +532,7 @@ $(function() {
                         })
                         .attr('stroke', '#fff')
                         .attr('transform', function(d) {
-                            return 'translate(0,' + y(d.values[0].y) + ')'
+                            return 'translate(0,' + y(d.values[0].y) + ')';
                         });
 
                     //container data point circles for mouseover
@@ -600,17 +600,17 @@ $(function() {
                                 }
                                 //push values to div and then update position
                                 $('.mi-dw-year').html(d0);
-                                $('.mi-dw-domestic').html((dom_val * .000001).toFixed(2));
-                                $('.mi-dw-import').html((imp_val * .000001).toFixed(2));
-                                $('.mi-dw-export').html((exp_val * .000001).toFixed(2));
-                                return 'translate(' + x(parseDate(c[0])) + ',' + y(yV) + ')'
+                                $('.mi-dw-domestic').html((dom_val * 0.000001).toFixed(2));
+                                $('.mi-dw-import').html((imp_val * 0.000001).toFixed(2));
+                                $('.mi-dw-export').html((exp_val * 0.000001).toFixed(2));
+                                return 'translate(' + x(parseDate(c[0])) + ',' + y(yV) + ')';
                             });
 
                         contCircles.transition()
                             .duration(50)
                             .attr('transform', function(d) {
-                                $('.mi-dw-containers').html((containers[c[1]].value * .001).toFixed(0))
-                                return 'translate(' + x(parseDate(c[0])) + ',' + y0(containers[c[1]].value) + ')'
+                                $('.mi-dw-containers').html((containers[c[1]].value * 0.001).toFixed(0));
+                                return 'translate(' + x(parseDate(c[0])) + ',' + y0(containers[c[1]].value) + ')';
                             });
 
                         //create tracking for hover line
@@ -660,7 +660,7 @@ $(function() {
                                 portChange = portRank - prevRank,
                                 //trade indicator calculations
                                 totalTrade = parseInt(data[yr].swt_import) + parseInt(data[yr].swt_export) + parseInt(data[yr].domestic),
-                                totalTradefm = numeral((totalTrade) * .000001).format('0,0.0') + ' M',
+                                totalTradefm = numeral((totalTrade) * 0.000001).format('0,0.0') + ' M',
                                 prevTrade = parseInt(data[yr - 1].swt_import) + parseInt(data[yr - 1].swt_export) + parseInt(data[yr - 1].domestic),
                                 regionalTradeChange = (((totalTrade - prevTrade) / prevTrade) * 100).toFixed(1),
                                 nationalTradeChange = (((parseInt(data[yr].nation_tot) - parseInt(data[yr - 1].nation_tot)) / parseInt(data[yr - 1].nation_tot)) * 100).toFixed(1),
@@ -678,7 +678,7 @@ $(function() {
                                 prevExport = (parseInt(data[yr - 1].swt_export) / (parseInt(data[yr - 1].swt_export) + parseInt(data[yr - 1].swt_import))) * 100,
                                 exportChange = ((parseInt(data[yr].swt_export) - parseInt(data[yr - 1].swt_export)) / parseInt(data[yr - 1].swt_export)) * 100,
                                 usExportChange = ((parseInt(data[yr].us_export) - parseInt(data[yr - 1].us_export)) / parseInt(data[yr - 1].us_export)) * 100,
-                                exportTons = parseInt(data[yr].swt_export) * .000001,
+                                exportTons = parseInt(data[yr].swt_export) * 0.000001,
                                 exportComparison = calcDifference(exportChange, usExportChange),
 
                                 //export indicators
@@ -729,7 +729,7 @@ $(function() {
                             radius = 67 / 2,
                             //radius = Math.min(pieHeight, pieWidth) / 2,
                             donutWidth = 15,
-                            tp = (pieWidth *.05).toFixed(0);
+                            tp = (pieWidth *0.05).toFixed(0);
 
                         if(pieWidth > 280) {
                             $('#mi-export-percent').css('left', Number(103) + Number(tp) +'px');
@@ -796,9 +796,9 @@ $(function() {
                                 .style('top', (pieHeight / 2) - 12 + 'px');
                             
                         } else {
-                            $('#mi-export-percent').css('left', Number(28) + Number(tp *.5) +'px');
+                            $('#mi-export-percent').css('left', Number(28) + Number(tp *0.5) +'px');
                             $('#mi-export-overlay').css('background', 'url("lib/images/mi_export_overlay-sm.png") no-repeat').css('left', Number(20) + Number(tp *.5) +'px');
-                            $('#mi-export-info-label').css('left', Number(120) + Number(tp *.45) +'px');
+                            $('#mi-export-info-label').css('left', Number(120) + Number(tp *0.45) +'px');
                             
                         }
                         if(pieWidth > 280 && pieWidth < 300){

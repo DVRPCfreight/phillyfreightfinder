@@ -13,7 +13,8 @@
 					measure = 'ton',
 					mode = 'all',
 					currCty = 42017,
-					county = 'bucks';
+					county = 'bucks',
+					singleComm, bLabel, commItem;
 				
 				// put circles on map (standard radius)
 				var svg = d3.select('#content').append('svg')
@@ -40,11 +41,11 @@
 				var path = d3.geo.path()
 					.projection(projection);
 
-				d3.json("data/d3/us_states_shapes.json", function(json) {
-					states.selectAll("path")
+				d3.json('data/d3/us_states_shapes.json', function(json) {
+					states.selectAll('path')
 						.data(json.features)
-						.enter().append("path")
-						.attr("d", path)
+						.enter().append('path')
+						.attr('d', path)
 						.attr('class','states_outline');
 						
 				});
@@ -76,10 +77,10 @@
 				// load commodity data 
 				
 				function loadCommodities(c, m, d, mo){
-					var cty = c, meas = m, cdir = d, cmode = mo, matchComm = [], sortFunction;
+					var cty = c, meas = m, cdir = d, cmode = mo, matchComm = [], sortFunction, l;
 					
-					for(var i = 0; i < CoData.length; i++){
-						var comm = CoData[i];
+					for(l = 0; l < CoData.length; l++){
+						var comm = CoData[l];
 						
 						if(comm.dir === cdir && parseInt(comm.region) === cty && comm.mode.toLowerCase() === cmode){
 							matchComm.push(comm);
@@ -91,9 +92,12 @@
 				}
 
 				function sortCommodities(c, meas){
-					if(meas === 'ton'){c.sort(function(a,b){return b.ton - a.ton});
-						}else{c.sort(function(a,b){return b.value - a.value});}
-					return c
+					if(meas === 'ton'){
+						c.sort(function(a,b){return b.ton - a.ton;});
+					}else{
+						c.sort(function(a,b){return b.value - a.value;});
+					}
+					return c;
 				}
 
 
@@ -105,38 +109,38 @@
 					$('#commChart').empty().html('');
 					
 					// define the data variables
-					var commColors= ["#312A6A","#323576","#35478A","#36559A","#2E5EA5","#396ab2","#4276c2","#5584c9","#6992cf","#7ca0d5"]
+					var commColors= ['#312A6A','#323576','#35478A','#36559A','#2E5EA5','#396ab2','#4276c2','#5584c9','#6992cf','#7ca0d5'];
 					
 					var commodityName = function(stccCode){
-						var result = null;
-						for (var i = 0; i < stcc.length; i++) {
-							var code = stcc[i];
+						var result = null, p;
+						for (p= 0; p < stcc.length; p++) {
+							var code = stcc[p];
 							if (parseInt(code.stcc) === parseInt(stccCode.stcc4)) {
 								result = code.name;
 							}
 						}
 						return result;
-					}
+					};
 
-					function prepChartData(commItem){
-							var ci = commodityName(commItem);
+					function prepChartData(citem){
+							var ci = commodityName(citem);
 							if(measure === 'ton'){
-								values.push(parseInt(commItem.ton));
+								values.push(parseInt(citem.ton));
 							}else{
-								values.push(parseInt(commItem.value));
+								values.push(parseInt(citem.value));
 							}
 							stccNames.push(ci);
 					}
-
+					var k;
 					if(comms.length < 10){
-						for (var i = 0; i < comms.length; i++){				
-							var commItem = comms[i];
-							prepChartData(commItem);		
+						for (k = 0; k < comms.length; k++){				
+							singleComm = comms[k];
+							prepChartData(singleComm);		
 						}
 					}else{
-						for (var i = 0; i < 10; i++){
-							var commItem = comms[i];
-							prepChartData(commItem);
+						for (k = 0; k < 10; k++){
+							singleComm = comms[k];
+							prepChartData(singleComm);
 						}
 					}
 
@@ -148,9 +152,9 @@
 					var barHeight = (height-30) / values.length;
 					
 					// build the chart
-					var chart = d3.select("#commChart")
-					    .attr("width", width)
-					    .attr("height", height);
+					var chart = d3.select('#commChart')
+					    .attr('width', width)
+					    .attr('height', height);
 
 					var colorScale = d3.scale.quantize()
 						.domain([0,stccNames.length])
@@ -167,22 +171,23 @@
 					function make_x_axis() {        
 					    return d3.svg.axis()
 					        .scale(x)
-					         .orient("bottom")
-					         .ticks(5)         
+					         .orient('bottom')
+					         .ticks(5);         
 					}
 
 					function xLabel(){
-						if(measure==='ton'){return 'thousand tons of activity'}
-							else{return 'million dollars of activity'}
+						if(measure==='ton'){return 'thousand tons of activity';}
+							else{return 'million dollars of activity';}
 					}
 
 					function formatValues(d){
+						var dv;
 						if(measure === 'ton'){
-							var value = numeral(round((d*.001),2)).format('0,0');
+							dv = numeral(round((d*0.001),2)).format('0,0');
 						}else{
-							var value = '$ '+ numeral(round((d*.000001),2)).format('0,0');
+							dv = '$ '+ numeral(round((d*0.000001),2)).format('0,0');
 						}
-						return value
+						return dv;
 					}
 
 					// add axis, labels, and grid
@@ -193,56 +198,56 @@
 						.tickSize(0)
 						.tickFormat(function(d,i){ return stccNames[i]; });
 
-					chart.append("g")
-					      .attr("class", "x axis")
-					      .attr("transform", "translate(220," + xheight + ")")
+					chart.append('g')
+					      .attr('class', 'x axis')
+					      .attr('transform', 'translate(220,' + xheight + ')')
 					      .call(make_x_axis()
 					      	.tickSize(2)
 					      	.tickFormat(formatValues)
 					 		);
 
-					chart.append("g")         
-				        .attr("class", "grid")
-				        .attr("transform", "translate(220," + xheight + ")")
-				        .style("stroke-dasharray", ("1, 2"))
+					chart.append('g')         
+				        .attr('class', 'grid')
+				        .attr('transform', 'translate(220,' + xheight + ')')
+				        .style('stroke-dasharray', ('1, 2'))
 				        .call(make_x_axis()
 				            .tickSize(-xheight, 0, 0)
-				            .tickFormat("")
+				            .tickFormat('')
 				        );
 
 				    var y_xis = chart.append('g')
-						  .attr("transform", "translate(220,0)")
+						  .attr('transform', 'translate(220,0)')
 						  .attr('id','yaxis')
 						  .call(yAxis)
 						  		.selectAll('text')
 					      		.attr('y', barHeight/2 );
 
-					chart.append("text")
-					    .attr("class", "x-label")
-					    .attr("text-anchor", "end")
-					    .attr("x", (width/2) + 110 )
-					    .attr("y", height-2)
+					chart.append('text')
+					    .attr('class', 'x-label')
+					    .attr('text-anchor', 'end')
+					    .attr('x', (width/2) + 110 )
+					    .attr('y', height-2)
 					    .text(xLabel);	
 
 				    //build bars
-				    var bar = chart.append("g")
-				    	.attr("transform", "translate(220, 0)")
+				    var bar = chart.append('g')
+				    	.attr('transform', 'translate(220, 0)')
 				    	.attr('id', 'bars')
 				    	.selectAll('rect')
 							.data(values)
 					    .enter();
 				   					
-					bar.append("rect")
-						.attr("transform", function(d, i) { return "translate(0, " + i * barHeight + ")"; })
-					    .attr("width", 0)
-						.attr("height", barHeight - 2)
-						.attr("class", "barTip")
+					bar.append('rect')
+						.attr('transform', function(d, i) { return 'translate(0, ' + i * barHeight + ')'; })
+					    .attr('width', 0)
+						.attr('height', barHeight - 2)
+						.attr('class', 'barTip')
 						.style('fill',function(d,i){ return colorScale(i); })
 					    .transition()
 						      .delay(function(d, i) { return i * 100; })
 						      .duration(400)
-						      .attr("width", x)
-						      .attr('val', function(d,i){ return d });
+						      .attr('width', x)
+						      .attr('val', function(d,i){ return d; });
 
 
 					$('.barTip').tipsy({ 
@@ -250,8 +255,8 @@
 				        html: true, 
 				        title: function() {
 				          var a = this.getAttribute('val');
-				          if(measure === 'ton'){ var bLabel = numeral(round((a*.001),2)).format('0,0.0') +' ktons';
-				          }else{ var bLabel = '$ '+ numeral(round((a*.000001),2)).format('0,0.0') + ' M';
+				          if(measure === 'ton'){ bLabel = numeral(round((a*0.001),2)).format('0,0.0') +' ktons';
+				          }else{ bLabel = '$ '+ numeral(round((a*0.000001),2)).format('0,0.0') + ' M';
 				          }
 				          return bLabel ; 
 				        }
@@ -266,35 +271,38 @@
 					$('#commList1').html('');
 					$('#commList2').html('');
 					var value = function(c){
+						var mv;
 						if(measure === 'ton'){
-							var value = numeral(round((c.ton*.001),2)).format('0,0.0') +' ktons';
+							mv = numeral(round((c.ton*0.001),2)).format('0,0.0') +' ktons';
 						}else{
-							var value = '$ '+ numeral(round((c.value*.000001),2)).format('0,0.0') + ' M';
+							mv = '$ '+ numeral(round((c.value*0.000001),2)).format('0,0.0') + ' M';
 						}
-						return value;
-					}
+						return mv;
+					};
 					var commodityName = function(stccCode){
-						var result = null;
+						var result = null, s;
 					
-						for (var i = 0; i < stcc.length; i++) {
-							var code = stcc[i];
+						for (s = 0; s < stcc.length; s++) {
+							var code = stcc[s];
 							if (parseInt(code.stcc) === parseInt(stccCode.stcc4)) {
 								result = code.name;
 							}
 						}
 						return result;
+					};
+					var commItem, number, ciString, cu;
+					
+					for (cu = 0; cu < 5; cu++){
+							commItem = comms[cu],
+							number = cu + 1,
+							ciString = '<li class=\'list-group-item\'><span class=\'badge\'>' + value(commItem) + '</span><span class=\'rankNumber\'>'+ number + '</span> <b>' + commodityName(commItem) + '</b></li>';
+						$(ciString).appendTo('#commList1');
 					}
-					for (var i = 0; i < 5; i++){
-						var commItem = comms[i],
-							number = i + 1,
-							ci = '<li class="list-group-item"><span class="badge">'+ value(commItem) +'</span><span class="rankNumber">'+ number + '</span> <b>'+ commodityName(commItem) +'</b></li>';
-						$(ci).appendTo('#commList1');
-					}
-					for (var i = 5; i < 10; i++){
-						var commItem = comms[i],
-							number = i + 1,
-							ci = '<li class="list-group-item"><span class="badge">'+ value(commItem) +'</span><span class="rankNumber">'+ number + '</span> <b>'+ commodityName(commItem) +'</b></li>';
-						$(ci).appendTo('#commList2');
+					for (cu = 5; cu < 10; cu++){
+							commItem = comms[cu],
+							number = cu + 1,
+							ciString = '<li class=\'list-group-item\'><span class=\'badge\'>'+ value(commItem) +'</span><span class=\'rankNumber\'>'+ number + '</span> <b>'+ commodityName(commItem) +'</b></li>';
+						$(ciString).appendTo('#commList2');
 					}
 				}
 
@@ -304,43 +312,43 @@
 				// **********************************************
 				// commodity flow button controls
 
-				$('input[name="dir"]').change(function() {
+				$('input[name=\'dir\']').change(function() {
 					currDir = $(this).val();
 					var dirName = ((currDir==='in') ? 'Inbound' : 'Outbound');
 					sizeMetros(currCty, currDir);
 					$('#comm-'+ currDir).prop('checked',true);
-					$('#tradeDirection').html(dirName+ ' <span class="caret"></span>')
+					$('#tradeDirection').html(dirName+ ' <span class=\'caret\'></span>');
 				});
 
 
-				$('input[name="county"]').change(function() {
+				$('input[name=\'county\']').change(function() {
 					d3.selectAll('#temp text').remove();
 					county = this.id;
 					currCty = parseInt($(this).val());
 					sizeMetros(currCty, currDir);
 				});
 
-				$('input[name="measure"]').change(function() {
+				$('input[name=\'measure\']').change(function() {
 					measure = $(this).val();
 					var measureName = ((measure==='ton') ? 'Volume' : 'Value');
 					sizeMetros(currCty, currDir, 'measure');
 					$('#comm-'+ measure).prop('checked',true);
-					$('#tradeMeasure').html(measureName+ ' <span class="caret"></span>')
+					$('#tradeMeasure').html(measureName+ ' <span class=\'caret\'></span>');
 				});
 
-				$('input[name="mode"]').change(function() {
+				$('input[name=\'mode\']').change(function() {
 					mode = $(this).val();
 					sizeMetros(currCty, currDir, 'mode');
 				});
 				
-				$('input[name="tradeMeasure"]').change(function() {
+				$('input[name=\'tradeMeasure\']').change(function() {
 					measure = $(this).val();
-					$("#radio_"+measure).trigger("click");
+					$('#radio_'+measure).trigger('click');
 				});
 
-				$('input[name="tradeDirection"]').change(function() {
+				$('input[name=\'tradeDirection\']').change(function() {
 					currDir = $(this).val();
-					$("#radio_"+currDir).trigger("click");
+					$('#radio_'+currDir).trigger('click');
 				});
 
 
@@ -354,7 +362,7 @@
                     changeSelect.trigger('click'); 
                                          
                 });
-                $(".btn").mouseup(function(){
+                $('.btn').mouseup(function(){
                     $(this).blur();
                 });
 				
@@ -371,10 +379,10 @@
 				
 					a = a.sort(sortNumber);
 				
-					var trimmed = [];
-					for (var i = 0; i < a.length; i++) {
-						if (a[i] !== a[i - 1]) {
-							trimmed.push(a[i]);
+					var trimmed = [], o;
+					for (o = 0; o < a.length; o++) {
+						if (a[o] !== a[o - 1]) {
+							trimmed.push(a[o]);
 						}
 					}
 					return trimmed;
@@ -384,10 +392,10 @@
 				
 				function getMetro(id) {
 								
-					var result = null;
+					var result = null, gm;
 					
-					for (var i = 0; i < regionLookup.length; i++) {
-						var metro = regionLookup[i];
+					for (gm = 0; gm < regionLookup.length; gm++) {
+						var metro = regionLookup[gm];
 						if (parseInt(metro.id) === parseInt(id)) {
 							result = metro;
 						}
@@ -399,10 +407,10 @@
 				
 				function addCirclesToMap(a, r) {
 				
-					var pixelLoc = d3.geo.albersUsa();
+					var pixelLoc = d3.geo.albersUsa(), cl;
 			
-					for (var i = 0; i < a.length; i++) {
-						var metro = getMetro(a[i]);
+					for (cl = 0; cl < a.length; cl++) {
+						var metro = getMetro(a[cl]);
 						
 						if (metro) {
 							var xy = projection([metro.lon, metro.lat]);
@@ -437,8 +445,8 @@
 				// **********************************************
 
 				function sortRegions(regions, measure){
-					if(measure === 'ton'){regions.sort(function(a,b){return b.ton - a.ton});
-						}else{regions.sort(function(a,b){return b.val - a.val});}
+					if(measure === 'ton'){regions.sort(function(a,b){return b.ton - a.ton;});
+						}else{regions.sort(function(a,b){return b.val - a.val;});}
 					return regions;
 
 				}
@@ -453,13 +461,13 @@
 					$('.flowBtn').attr('disabled', true);
 					$('#tradeList').html('');
 
-					setTimeout(buttonsActive, 520)
+					setTimeout(buttonsActive, 520);
 					//identify range based on data
 					var sortedRegions = sortRegions(regionData, measure);
 
-					var scaleRange = [], minSize = [], maxSize = [], listItems = [], j=0;
-					for (var i = 0; i < sortedRegions.length; i++) {
-						var d = sortedRegions[i];
+					var scaleRange = [], minSize = [], maxSize = [], listItems = [], j=0, h;
+					for (h = 0; h < sortedRegions.length; h++) {
+						var d = sortedRegions[h];
 						if(parseInt(d.region_id) === metroId && d.rel_region_id != d.region_id && d.dir === dir && d.mode === mode){
 							if(measure === 'ton'){
 								scaleRange.push(parseInt(d.ton));
@@ -467,10 +475,10 @@
 						}
 					}
 
-					var minSize = d3.min(scaleRange),
-						maxSize = d3.max(scaleRange),
-						scale = d3.scale.pow()
-							.exponent(.6)
+					minSize = d3.min(scaleRange);
+					maxSize = d3.max(scaleRange);
+					var	scale = d3.scale.pow()
+							.exponent(0.6)
 							.domain([minSize, maxSize])
 							.range([2, 35]);
 					d3.select('#metros .sel_primary')
@@ -486,7 +494,7 @@
 					
 
 					
-					$("svg circle").unbind('mouseenter mouseleave');
+					$('svg circle').unbind('mouseenter mouseleave');
 					
 					// size primary metro
 					d3.select('#metro_' + metroId)
@@ -495,37 +503,39 @@
 						.classed('prevSelection', false)
 						.select('circle')
 							.attr('r', 15);
-
+//remove now!
 					//prep data for all
-					if(mode === 'all'){
-						for(var i = 0; i < regionData.length; i++){
+				/*	if(mode === 'all'){
+						for(i = 0; i < regionData.length; i++){
 							if (parseInt(d.region_id) === metroId && d.dir === dir && d.rel_region_id != d.region_id) {
 								
 							}
 						}
-					}
+					}*/
 
 					// loop through data and size metros related to primary
-					for (var i = 0; i < sortedRegions.length; i++) {
-						var d = sortedRegions[i], r, ttLabel, num, formatNum;
+					var q;
+					for (q = 0; q < sortedRegions.length; q++) {
+						var t = sortedRegions[q], r, ttLabel, num, formatNum;
 							//r = scale(Math.sqrt(d.val / Math.PI));
 						//identify measurement of moves	
 						if(measure === 'ton'){
-							r = scale(d.ton),
-							num = d.ton,
-							formatNum = numeral(round((num*.001),2)).format('0,0.0') +' ktons';
-						}else{r = scale(d.val),
-							num = d.val,
-							formatNum = '$ '+ numeral(round((num*.000001),2)).format('0,0.0') + ' M';
+							r = scale(t.ton);
+							num = t.ton;
+							formatNum = numeral(round((num*0.001),2)).format('0,0.0') +' ktons';
+						}else{
+							r = scale(t.val);
+							num = t.val;
+							formatNum = '$ '+ numeral(round((num*0.000001),2)).format('0,0.0') + ' M';
 						}
 												
 
-						if (parseInt(d.region_id) === metroId && d.dir === dir && d.rel_region_id != d.region_id && d.mode === mode) {						
-								var elem = d3.select('#metro_' + d.rel_region_id),
-									a = getMetro(d.rel_region_id);
+						if (parseInt(t.region_id) === metroId && t.dir === dir && t.rel_region_id != t.region_id && t.mode === mode) {						
+								var elem = d3.select('#metro_' + t.rel_region_id),
+									a = getMetro(t.rel_region_id);
 								var	name = a.familiar_name;
 								if(num > 0){
-									var listItem = '<li class="list-group-item"><span class="badge partner-val">'+ formatNum +'</span>'+name+'</li>'; 
+									var listItem = '<li class=\'list-group-item\'><span class=\'badge partner-val\'>'+ formatNum +'</span>'+name+'</li>'; 
 									listItems.push(listItem);
 								}
 								
@@ -540,19 +550,22 @@
 											.attr('i', j)
 											.attr('val', num)
 											.attr('name', name);
-								j++												
+								j++;												
 						}
 					}
+
+					var dl;
+
 					if(listItems.length>0){
-						for (var i = 0; i < 10; i++) {
-							var dl = listItems[i];
+						for (i = 0; i < 10; i++) {
+							dl = listItems[i];
 							$(dl).appendTo('#tradeList');
 						}
 					}else{
 						var capitalized = county.slice(0,1).toUpperCase() + county.slice(1, county.length);
-						var dl = '<li class="list-group-item"><b>'+ capitalized +' County</b> has no domestic trade using <b>'+ mode +' transportation.</b></li>';
+						dl = '<li class=\'list-group-item\'><b>'+ capitalized +' County</b> has no domestic trade using <b>'+ mode +' transportation.</b></li>';
 						if(mode === 'air' && metroId === 42101)
-							{dl += '<li class="list-group-item">Air transportation through Philadelphia International Airport is captured by Delaware County.</li>';}
+							{dl += '<li class=\'list-group-item\'>Air transportation through Philadelphia International Airport is captured by Delaware County.</li>';}
 						$(dl).appendTo('#tradeList');
 					}
 
@@ -574,8 +587,8 @@
 				        html: true, 
 				        title: function() {
 				          var a = this.getAttribute('val'), n = this.getAttribute('name'); var ra = round(a,2);
-				          if(measure === 'ton'){ ttLabel = numeral(round((a*.001),2)).format('0,0.0') +' ktons';
-				          }else{ ttLabel = '$ '+ numeral(round((a*.000001),2)).format('0,0.0') + ' M';
+				          if(measure === 'ton'){ ttLabel = numeral(round((a*0.001),2)).format('0,0.0') +' ktons';
+				          }else{ ttLabel = '$ '+ numeral(round((a*0.000001),2)).format('0,0.0') + ' M';
 				          }
 				          return '<b>'+n+'</b><br>' + ttLabel ; 
 				        }
@@ -586,11 +599,11 @@
 					d3.selectAll('.sel_related circle')
 						.on('mouseover', function(e) {
 							//if (!packer.animating) {
-								d3.select(this).classed("active", true);//.style("stroke-width", 3);
+								d3.select(this).classed('active', true);//.style('stroke-width', 3);
 							//}
 						})
 						.on('mouseout', function(e) {
-							d3.select(this).classed("active", false);//.style("stroke-width", 0);			
+							d3.select(this).classed('active', false);//.style('stroke-width', 0);			
 						});
 					
 					loadCommodities(currCty, measure, dir, mode);
@@ -608,20 +621,5 @@
 			});
 			});
 		});
-	});
-	
-	// **********************************************
-	/*var commData;	
-	d3.csv('../lib/data/commodities.csv', function(CoData) {
-		for (var i = 0; i < CoData.length; i++) {
-			
-		}
-
-
-
-	});*/
-
-	
-/*	}*/
-	
+	});	
 })();

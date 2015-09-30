@@ -8,23 +8,16 @@
         <meta name="description" content="">
         <meta name="author" content="Michael Ruane, Delaware Valley Regional Planning Commission, Office of Freight and Aviation Planning">
         <title>PhillyFreightFinder 3.1.2  |  DVRPC</title>
-        <link href='lib/pfficons.css' rel='stylesheet'/>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,800' rel='stylesheet' type='text/css'>
-    
+ 
         <link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" rel="stylesheet" type="text/css">
-        <!--<link rel="stylesheet" href="lib/assets/nouislider.min.css" type="text/css" />
-        locals for offline development  
-        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        
-        <link href="lib/locals/leaflet.css" rel="stylesheet" type="text/css">
-        <link href="lib/assets/typeahead.min.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" media="all" href="lib/tipsy.css"/>
-        <link href='lib/style.css' rel='stylesheet'/>
-  --> 
+<!-- 
+       <link rel="stylesheet" href="locals/pff-locals.min.css" type="text/css" />
+-->
         <link rel="stylesheet" href="https://dvrpcfreight.github.io/dynamic-icons/dyna.css">
-        <link href='lib/pff_style.min.css' rel='stylesheet' type="text/css"/>
-       <!-- <link rel="stylesheet" type="text/css" media="print" href="style.css">-->
+        <link href='dist/style.min.css' rel='stylesheet' type="text/css"/>
+
 
         <style>
        
@@ -150,8 +143,8 @@
                         <span class="icon-bar"></span>
                     </button>
                 <div class="navbar-brand ">
-                    <a href="http://www.dvrpc.org/freight/" title="DVRPC Website" target="_blank" class="dvrpc-logo"><img src='lib/images/header_dvrpc.png' alt="DVRPC logo" height='50'/></a>
-                    <a href="#" class="dvrpc-pff" title="PFF homepage"><img src='lib/images/header_pff.png' height='50' alt="PFF logo"/></a>
+                    <a href="http://www.dvrpc.org/freight/" title="DVRPC Website" target="_blank" class="dvrpc-logo"><img src='dist/images/header_dvrpc.png' alt="DVRPC logo" height='50'/></a>
+                    <a href="#" class="dvrpc-pff" title="PFF homepage"><img src='dist/images/header_pff.png' height='50' alt="PFF logo"/></a>
                 </div>
             </div>
             <!-- Navigation links .navbar-collapse-->
@@ -230,7 +223,7 @@
                     </div>-->
                     <div class='col-md-12 hpbanner'>
                         <div class='center-block col-md-9' style='float:none;'>
-                           <a href="#map"> <img style="width: 100%;max-width: 1100px;margin: 20px auto;border-radius: 10px;"src="lib/images/homeMap.png"/></a>
+                           <a href="#map"> <img style="width: 100%;max-width: 1100px;margin: 20px auto;border-radius: 10px;"src="dist/images/homeMap.png"/></a>
                         </div>
                     </div>
                 </section>
@@ -261,7 +254,7 @@
                                     <h3 id=''>DVRPC Region</h3>
                                     <div class='col-md-6'>
                                         <div class='row'>
-                                            <div class='col-md-4 center'><img src='lib/images/trkHighway.png' width='90'/><div class='dlabel white'><strong>Trucking/Highway</strong><br/>Statistics</div></div>
+                                            <div class='col-md-4 center'><img src='dist/images/trkHighway.png' width='90'/><div class='dlabel white'><strong>Trucking/Highway</strong><br/>Statistics</div></div>
                                             <div class='col-md-4 center'><div class='ddata'>352</div><div class='dlabel'>miles<br/><strong>interstate routes</strong></div></div>
                                             <div class='col-md-4 center'><div class='ddata'>1.0k</div><div class='dlabel'>miles<br/><strong>national highway</strong></div></div>
                                         </div>
@@ -272,19 +265,19 @@
                                         </div>
                                         <div class='divider'></div>
                                         <div class='row'>
-                                            <div class='col-md-4 center'><img src='lib/images/frRail.png' width='90'/><div class='dlabel white'><strong>Freight Rail</strong><br/>Statistics</div></div>
+                                            <div class='col-md-4 center'><img src='dist/images/frRail.png' width='90'/><div class='dlabel white'><strong>Freight Rail</strong><br/>Statistics</div></div>
                                             <div class='col-md-4 center'><div class='ddata'>689</div><div class='dlabel'>miles<br/><strong>freight trackage</strong></div></div>
                                             <div class='col-md-4 center'><div class='ddata'>32</div><div class='dlabel'><strong>yards and<br/>intermodal terminals</strong></div></div>
                                         </div>
                                         <div class='divider'></div>
                                         <div class='row'>
-                                            <div class='col-md-4 center'><img src='lib/images/pMAritime.png' width='90'/><div class='dlabel white'><strong>Port &#38; Maritime</strong><br/>Statistics</div></div>
+                                            <div class='col-md-4 center'><img src='dist/images/pMAritime.png' width='90'/><div class='dlabel white'><strong>Port &#38; Maritime</strong><br/>Statistics</div></div>
                                             <div class='col-md-4 center'><div class='ddata'>31</div><div class='dlabel'><strong>port<br/>terminals</strong></div></div>
                                             <div class='col-md-4 center'><div class='ddata'>1.7k</div><div class='dlabel'><strong>annual<br/>ship calls</strong></div></div>
                                         </div>
                                         <div class='divider'></div>
                                         <div class='row'>
-                                            <div class='col-md-4 center'><img src='lib/images/fCenters.png' width='90'/><div class='dlabel white'><strong>Freight Center</strong><br/>Statistics</div></div>
+                                            <div class='col-md-4 center'><img src='dist/images/fCenters.png' width='90'/><div class='dlabel white'><strong>Freight Center</strong><br/>Statistics</div></div>
                                             <div class='col-md-4 center'><div class='ddata'>43</div><div class='dlabel'>unique<br/><strong>freight centers</strong></div></div>
                                             <div class='col-md-4 center'><div class='ddata'>43.8k</div><div class='dlabel'>acres<br/><strong>freight centers</strong></div></div>
                                         </div>
@@ -310,7 +303,7 @@
                                     <h3 id='ctyDataName'></h3>
                                     <div class='col-md-6'>
                                         <div class='row'>
-                                            <div class='col-md-4 center'><img src='lib/images/trkHighway.png' width='90'/><div class='dlabel white'><strong>Trucking/Highway</strong><br/>Statistics</div></div>
+                                            <div class='col-md-4 center'><img src='dist/images/trkHighway.png' width='90'/><div class='dlabel white'><strong>Trucking/Highway</strong><br/>Statistics</div></div>
                                             <div class='col-md-4 center'><div id='data-1' class='ddata'></div><div class='dlabel'>miles<br/><strong>interstate routes</strong></div></div>
                                             <div class='col-md-4 center'><div id='data-2' class='ddata'></div><div class='dlabel'>miles<br/><strong>national highway</strong></div></div>
                                         </div>
@@ -321,19 +314,19 @@
                                         </div>
                                         <div class='divider'></div>
                                         <div class='row'>
-                                            <div class='col-md-4 center'><img src='lib/images/frRail.png' width='90'/><div class='dlabel white'><strong>Freight Rail</strong><br/>Statistics</div></div>
+                                            <div class='col-md-4 center'><img src='dist/images/frRail.png' width='90'/><div class='dlabel white'><strong>Freight Rail</strong><br/>Statistics</div></div>
                                             <div class='col-md-4 center'><div id='data-6' class='ddata'></div><div class='dlabel'>miles<br/><strong>freight trackage</strong></div></div>
                                             <div class='col-md-4 center'><div id='data-7' class='ddata'></div><div class='dlabel'><strong>yards and<br/>intermodal terminals</strong></div></div>
                                         </div>
                                         <div class='divider'></div>
                                         <div class='row'>
-                                            <div class='col-md-4 center'><img src='lib/images/pMAritime.png' width='90'/><div class='dlabel white'><strong>Port &#38; Maritime</strong><br/>Statistics</div></div>
+                                            <div class='col-md-4 center'><img src='dist/images/pMAritime.png' width='90'/><div class='dlabel white'><strong>Port &#38; Maritime</strong><br/>Statistics</div></div>
                                             <div class='col-md-4 center'><div id='data-8' class='ddata'></div><div class='dlabel'><strong>port<br/>terminals</strong></div></div>
                                             <div class='col-md-4 center'><div id='data-9' class='ddata'></div><div class='dlabel'><strong>annual<br/>ship calls</strong></div></div>
                                         </div>
                                         <div class='divider'></div>
                                         <div class='row'>
-                                            <div class='col-md-4 center'><img src='lib/images/fCenters.png' width='90'/><div class='dlabel white'><strong>Freight Center</strong><br/>Statistics</div></div>
+                                            <div class='col-md-4 center'><img src='dist/images/fCenters.png' width='90'/><div class='dlabel white'><strong>Freight Center</strong><br/>Statistics</div></div>
                                             <div class='col-md-4 center'><div id='data-10' class='ddata'></div><div class='dlabel'>unique<br/><strong>freight centers</strong></div></div>
                                             <div class='col-md-4 center'><div id='data-11' class='ddata'></div><div class='dlabel'>acres<br/><strong>freight centers</strong></div></div>
                                         </div>
@@ -368,7 +361,7 @@
                             </div> 
                             <div class='col-md-5 col-lg-5'>
                                 <!--<div id=' '>
-                                    <div><img src="/lib/images/dvrpc_logoOfficial.png" title="DVRPC"></div>
+                                    <div><img src="/images/dvrpc_logoOfficial.png" title="DVRPC"></div>
                                 </div>-->
                                 <div>
                                     <h4>DVRPC Freight Planning Staff Mission Statement</h4>
@@ -1347,20 +1340,16 @@
 
 
         <!-- prep external loaded elements -->
-
-        <!-- locals for offline dev
-        <script type="text/javascript" src="lib/locals/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="lib/locals/leaflet.js"></script>
-        <script type="text/javascript" src="lib/locals/jquery.bxslider.min.js"></script>
-        <script type="text/javascript" src="lib/locals/highcharts.js"></script>
+<!-- locals for offline dev 
+        <script type="text/javascript" src="locals/pff-locals.min.js"></script>
 --> 
-
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
         <script type="text/javascript" src="http://cdn.jsdelivr.net/bxslider/4.1.1/jquery.bxslider.min.js"></script>
         <script type="text/javascript" src="http://cdn.jsdelivr.net/highcharts/4.0.3/highcharts.js"></script>
-   
-         
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.5.1/jquery.nicescroll.min.js"></script>
+        <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>  
+       
         <script type="text/javascript">
             // prep data tabs for loading of external resources
             var tab_status = {};
@@ -1369,34 +1358,13 @@
                 tab_status[data_id]= false;
             });
         </script>
-
-        <script type="text/javascript" src="lib/core/dyna-icons.js"></script>
-        <script type="text/javascript" src="lib/assets/typeahead.min.js"></script>
-        <script type="text/javascript" src="lib/assets/numeral.min.js"></script> 
-    
-<!--locals for offline dev 
-        <script type="text/javascript" src="lib/locals/jquery.nicescroll.js"></script>
-        <script type="text/javascript" src="lib/locals/bootstrap.min.js"></script>
- -->        
-
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.5.1/jquery.nicescroll.min.js"></script>
-        <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>  
-
-        <!--d3 dependencies
-        <script src="lib/assets/d3_2.7.0/d3.min.js"></script>
-        <script src="lib/assets/d3_2.7.0/d3compat.min.js"></script>
-        <script src="lib/assets/d3_2.7.0/d3.csv.min.js"></script>
-        <script src="lib/assets/circle_packer_movers.js"></script>-->
-        <script src="lib/assets/d3_2.7.0/d3.deploy.min.js"></script>
-        <script src="lib/assets/tipsy.js"></script>
+        <script type="text/javascript" src="dist/d3.build.min.js"></script>
+        <script type="text/javascript" src="dist/build.min.js"></script><!--compiled minified functions -->
         
 <!--
-        <script type="text/javascript" src="lib/assets/bootstrap.min.js"></script>
-        <script type="text/javascript" src="lib/assets/jquery.address.min.js"></script>
-        <script type="text/javascript" src="lib/actions.js"></script>
-        <script type="text/javascript" src="lib/map.js"></script> 
-        <script type="text/javascript" src="lib/core/core.js"></script> -->
-        <script type="text/javascript" src="lib/pff_deploy.min.js"></script><!--compiled minified functions -->
+        <script type="text/javascript" src="assets/jquery.address.min.js"></script>
+-->
+        
 
 
 

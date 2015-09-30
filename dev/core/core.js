@@ -34,8 +34,10 @@ function setMap(){
 }
 
 function loadScript(id){
-    $.getScript('lib/'+ id + '.js');
+    //console.log('script loaded');
+    $.getScript('../dist/tools/'+ id + '.js');
 }
+
 
 //load content based on hash
 $(function() {

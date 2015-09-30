@@ -1,5 +1,5 @@
 //$('head').append('<link rel="stylesheet" href="lib/assets/nouislider.min.css" type="text/css" />');
-$.getScript('lib/assets/nouislider.min.js', buildSlider);
+$.getScript('lib/dist/nouislider.min.js', buildSlider);
 
 var hp_map, hp_metric = 'TTI', hp_time = '0', tg = 0, tileGroups=[]; 
 //timing lookup to convert inputs
@@ -50,15 +50,15 @@ function buildSlider(){
 
     function recountVal(val){
         switch(val){
-            case 5:return '5 <span class="hp_tod">AM</span>';break;
-            case 7:return '7 <span class="hp_tod">AM</span>';break;
-            case 9:return '9 <span class="hp_tod">AM</span>';break;
-            case 11:return '11 <span class="hp_tod">AM</span>';break;
-            case 13:return '1 <span class="hp_tod">PM</span>';break;
-            case 15:return '3 <span class="hp_tod">PM</span>';break;
-            case 17:return '5 <span class="hp_tod">PM</span>';break;
-            case 19:return '7 <span class="hp_tod">PM</span>';break;
-            default :return '12 <span class="hp_tod">AM</span>';break;
+            case 5:return '5 <span class="hp_tod">AM</span>';
+            case 7:return '7 <span class="hp_tod">AM</span>';
+            case 9:return '9 <span class="hp_tod">AM</span>';
+            case 11:return '11 <span class="hp_tod">AM</span>';
+            case 13:return '1 <span class="hp_tod">PM</span>';
+            case 15:return '3 <span class="hp_tod">PM</span>';
+            case 17:return '5 <span class="hp_tod">PM</span>';
+            case 19:return '7 <span class="hp_tod">PM</span>';
+            default :return '12 <span class="hp_tod">AM</span>';
         }
     }
 	var prev_Low = 0, prev_High = 5;
@@ -73,10 +73,10 @@ function buildSlider(){
 				prev_High = 5;
 				prev_Low = 0;
 			}else if(upper > 5 && upper <= 19){
-				var newValue = upper - 2;
-				time_slider.noUiSlider.set([newValue,upper]);
+				var newLower = upper - 2;
+				time_slider.noUiSlider.set([newLower,upper]);
 				prev_High = upper;
-				prev_Low = newValue;
+				prev_Low = newLower;
 			}else{
 				time_slider.noUiSlider.set([19,24]);
 				prev_High = 24;
@@ -88,9 +88,9 @@ function buildSlider(){
 				prev_High = 5;
 				prev_Low = 0;
 			}else if(lower >= 5 && lower < 19){
-				var newValue = lower + 2;
-				time_slider.noUiSlider.set([lower, newValue]);
-				prev_High = newValue;
+				var newUpper = lower + 2;
+				time_slider.noUiSlider.set([lower, newUpper]);
+				prev_High = newUpper;
 				prev_Low = lower;
 			}else{
 				time_slider.noUiSlider.set([19,24]);
@@ -166,7 +166,7 @@ function buildSlider(){
 		    	}else{time_slider.noUiSlider.set([0, 5]);
 		    		rebuild_hp_layers();}
 		    }, 2000);
-		}
+		};
 
 		$(document.body).on('click', '.hp_play', function() {
 			$(this).toggleClass('hp_play hp_pause').html('<i class="glyphicon glyphicon-pause"></i>&nbsp;&nbsp;Pause');
