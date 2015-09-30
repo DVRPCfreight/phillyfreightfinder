@@ -1,5 +1,5 @@
 $(function() {
-
+    console.log('maritime indicators loaded');
     var miYear, updateTradePanel, sizePorts;
     var packer = sm.packer();
     var ind_up = '<i class="glyphicon glyphicon-circle-arrow-up"></i>',
@@ -138,7 +138,7 @@ $(function() {
                         }
                     });
                 }
-
+                console.log('maritime indicators parsed');
                 addPortCircles(port_points, 3);
 
                 // *********************************************

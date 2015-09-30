@@ -34,8 +34,9 @@ function setMap(){
 }
 
 function loadScript(id){
-    //console.log('script loaded');
-    $.getScript('../dist/tools/'+ id + '.js');
+   
+        $.getScript('../lib/tools/'+ id + '.js');
+
 }
 
 
@@ -50,7 +51,9 @@ $(function() {
         $('#' + tab_id).show(); 
         countymap.invalidateSize();  
         if(tab_status[tab_id] === false){
-            $('#'+ tab_id).load('includes/'+ tab_id + '.html', loadScript(tab_id));
+            $('#'+ tab_id).load('includes/'+ tab_id + '.html', function(){
+                    setTimeout(function(){loadScript(tab_id)}, 1000);
+            });
             tab_status[tab_id] = true;
             
         }

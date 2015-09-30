@@ -1,5 +1,5 @@
 //$('head').append('<link rel="stylesheet" href="lib/assets/nouislider.min.css" type="text/css" />');
-$.getScript('lib/dist/nouislider.min.js', buildSlider);
+$.getScript('lib/tools/assets/nouislider.js', buildSlider);
 
 var hp_map, hp_metric = 'TTI', hp_time = '0', tg = 0, tileGroups=[]; 
 //timing lookup to convert inputs

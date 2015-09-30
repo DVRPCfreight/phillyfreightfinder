@@ -12,9 +12,11 @@ module.exports = function(grunt){
 		        src: [
 		            'dev/core/dyna-icons.js',
 		            'dev/vendor/*.js',
+		            'dev/actions.js',
+		            'dev/map.js',
 		            'dev/core/core.js' 
 		        ],
-		        dest: 'dist/js/build.js',
+		        dest: 'lib/build.js',
 		    },
 		    d3: {
 		        src: [
@@ -23,25 +25,25 @@ module.exports = function(grunt){
 		            'dev/assets/d3_2.7.0/d3compat.min.js',
 		            'dev/assets/d3_2.7.0/circle_packer_movers.js' 
 		        ],
-		        dest: 'dist//js/d3.build.js',
+		        dest: 'lib/d3.build.js',
 		    }
 		},
 
 		uglify: {
 		    build: {
-		        src: 'dist/js/build.js',
-		        dest: 'dist/js/build.min.js'
+		        src: 'lib/build.js',
+		        dest: 'lib/build.min.js'
 		    },
 		    d3: {
-		        src: 'dist/js/d3.build.js',
-		        dest: 'dist/js/d3.build.min.js'
+		        src: 'lib/d3.build.js',
+		        dest: 'lib/d3.build.min.js'
 		    },
 		    tools: {
 		    	files: [{
 		    		expand:true,
 		    		cwd: 'dev/tools/',
-		    		src:['*.js'],
-		    		dest: 'dist/tools/',
+		    		src:['**/*.js'],
+		    		dest: 'lib/tools/',
 		    		ext: '.js'
 		    	}]
 		    }
@@ -50,7 +52,7 @@ module.exports = function(grunt){
 		cssmin: {
 		   dist: {
 			    files: {
-			         'dist/css/style.min.css': [
+			         'lib/style.min.css': [
 			         	'dev/core/css/dyna.css',
 			         	'dev/css/typeahead.min.css',
 			         	'dev/css/tipsy.css',
@@ -62,15 +64,15 @@ module.exports = function(grunt){
 		},
 
 		clean: {
-			js: ['dist/js/*.js', '!dist/js/*.min.js']
+			js: ['lib/*.js', '!lib/*.min.js']
 		},
 
 		copy: {
-				tools: {
+				lib: {
 					expand: true,
-					cwd: 'dist/',
+					cwd: 'lib/',
 					src: ['**'],
-					dest: 'html/dist/'
+					dest: 'html/lib/'
 					
 				},
 				includes: {
@@ -95,7 +97,7 @@ module.exports = function(grunt){
 			options: {
 	            reporter: require('jshint-stylish')
 	        },
-			tools : ['dist/tools/*.js']
+			tools : ['lib/tools/*.js']
 		},
 
 		imagemin:{
@@ -108,7 +110,7 @@ module.exports = function(grunt){
 						expand: true,
 						cwd: 'dev/images/',
 						src: ['**/*.png'],
-						dest: 'dist/images/',
+						dest: 'lib/images/',
 						ext: '.png'
 					}
 				]
@@ -122,7 +124,7 @@ module.exports = function(grunt){
 						expand: true,
 						cwd: 'dev/images/',
 						src: ['**/*.jpg'],
-						dest: 'dist/images/',
+						dest: 'lib/images/',
 						ext: '.jpg'	
 					}
 				]
@@ -132,6 +134,8 @@ module.exports = function(grunt){
 
     grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'clean']);
     grunt.registerTask('publish', ['default', 'imagemin', 'copy']);
+    grunt.registerTask('updatecss', ['cssmin']);
+    grunt.registerTask('updatejs', ['concat', 'uglify', 'clean']);
     grunt.registerTask('imageUpdates', ['imagemin']);
-
+    grunt.registerTask('start', ['express', 'watch']);
 };

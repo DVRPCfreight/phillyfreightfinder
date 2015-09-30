@@ -1,5 +1,5 @@
 //declare boundary of region
-var oLat = 40.018,
+var oLat = 40.018, 
     oLng = -75.148,
     zLevel = 9; ///adjust lat-lon coordinates to center on your region
 
