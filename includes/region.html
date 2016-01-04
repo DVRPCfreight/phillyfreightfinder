@@ -1,9 +1,9 @@
 <div class='page-title center-block col-lg-12'>
     <div id="c-region-title" class='center-block col-lg-10 col-md-12' style='float:none;'>
-        <div id='c-title-wrapper'>
+        <div id='c-title-wrapper' >
     		<h1><span id="c-name"> </span><span id="c-divider"></span><span id="c-tab"> </span></h1>
 		</div>
-        <div id='c-region-nav'>
+        <div id='c-region-nav' style="display:none;">
         	<ul id='c-steps'>
         		<li>
         			<a href='#' class='c-step-item c-step-current' data-target='c-region'>
@@ -57,9 +57,10 @@
         </div>
     </div> 
 </div><!--close the header -->
-
+<div class='hidden-lg hidden-md col-xs-12 ' style='height:57px;margin-bottom:10px'></div><div class='clearfix'></div>
 <!-- regional overview template -->
 <div id="c-region" class="col-lg-12 tool-content-dt c-region-tab" style="display: none;">
+
 	<div class='center-block col-lg-10 col-sm-12 ' style='float:none;'>
 		<div class="row">
 	        <div class='col-sm-5 col-md-6'>
@@ -80,7 +81,7 @@
 	        </div>
 	    </div>
     </div>
-    <div class='row'>
+    <!--<div class='row'>
         <div class='col-md-12 hpbanner' style='padding-bottom:20px;'> 
             <div class='center-block col-lg-10 col-sm-12' style='float:none;'>
                 <div id='dataContainer'>
@@ -106,7 +107,7 @@
                 </div> 
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
 
 <!-- network content template -->
@@ -349,7 +350,7 @@
 <!-- freight center template -->
 <div id="c-freight_centers" class="col-lg-12 tool-content-dt c-region-tab" style="display: none;">
     <div class='center-block col-lg-10 col-md-12' style='float:none;'>
-    	<p>Freight Centers</p>
+    	<div class="alert alert-danger" role="alert"><i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;&nbsp;<strong>Oh snap!</strong>&nbsp;&nbsp;There seem to be some script errors with this tool. It will be live again soon!</div>
     </div>
 </div>
 
@@ -421,7 +422,7 @@
     
         <!--<div class='clearfix'></div> style='float:none;'-->
         <div class='row dt-chart-row' >
-            <div id="topCommoditiesChart" class="col-md-7 col-sm-12">
+            <div id="topCommoditiesChart" class="col-xs-12">
                 <div class="panel panel-primary dt-chart-panel">
                     <div class="panel-heading">
                         <h4 class="panel-title" id="topPartnerTitle">Top 
@@ -449,7 +450,7 @@
                     </div>
                 </div>
             </div> 
-            <div id="modalSplitChart" class="col-md-5 col-sm-12">
+            <!--<div id="modalSplitChart" class="col-md-5 col-sm-12">
                 <div class="panel panel-primary dt-chart-panel">
                     <div class="panel-heading">
                         <h4 class="panel-title" id="topPartnerTitle">Total Shipments by Mode in Tons</h4>
@@ -458,10 +459,11 @@
                         <svg id=""></svg>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div> 
         <div><b>Source:</b> Data based on DVRPC processing of 2011 IHS Global Transearch database</div>  
     </div>
 </div>
 <div class="c-nav-left c-nav" style="display:none;"><i class="glyphicon glyphicon-chevron-left"></i><div><span id="c-nav-left-label"></span></div></div>
 <div class="c-nav-right c-nav" style="display:none;"><i class="glyphicon glyphicon-chevron-right"></i><div><span id="c-nav-right-label"></span></div></div>
+<div class='clearfix'></div>
