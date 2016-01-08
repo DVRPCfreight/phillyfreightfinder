@@ -44,7 +44,7 @@ function load_region(){
 		county = 'none', 
 		target = 'network',
 		dt_width = $('#content').width(), 
-		singleComm, bLabel, commItem, circle_scaler, offset, county_data, county_ref, fc_counties = [],
+		singleComm, bLabel, commItem, circle_scaler, offset, county_data, county_ref, fc_centers = [], fc_counties = [], fc_projection,
 		numText = {0:'zero',1:'one',2:'two',3:'three',4:'four',5:'five',6:'six',7:'seven'},
 		projection = d3.geo.albersUsa().scale(900).translate([dt_width, 430 / 2]);
 
@@ -99,7 +99,7 @@ function load_region(){
 		var ct_height = 420;
 		if ($('#c-region-map').length === 0) {
 			d3.json('data/d3/county_10k.js', function(county5k) {
-				fc_counties = county5k;
+				//fc_counties = county5k;
 				var svg = d3.select('#c-county-map').append('svg')
 					.attr('width', ct_width)
 					.attr('height', ct_height)
@@ -290,7 +290,7 @@ function load_region(){
 			load_network();
 		}else if(target === 'freight_centers'){
 			$('.loading_panel').show();
-			populate_centers();
+			populate_county();
 		}
 	}
 
@@ -430,110 +430,131 @@ function load_region(){
  	//*************************************************
    	// freight centers functions
    	//*************************************************
-	function populate_centers(){
+	function populate_county(){
 		if(fc_counties.length < 1){
 			d3.json('data/d3/county_10k.js', function(county_geo){
 				draw_fc_county(county_geo);
-				
+				fc_counties = county_geo;
 			});
 		}else{
-			get_county(fc_counties);
+			draw_fc_county(fc_counties);
 		}
 	}
 	function get_county(ac){  	
 		for(var i = 0; i < ac.features.length; i++){
 			//console.log(ac.features[i].properties.NAME);
 			if(ac.features[i].properties.NAME.toLowerCase() === county){
-				draw_fc_county(ac.features[i]);
+				return ac.features[i];
 			}
 		}
 	}
 
 	function draw_fc_county(county_geo){
-		fc_width = $('#c-fc-map-wrapper').width();
-		var svg = d3.select('#c-fc-map-wrapper').append('svg')
-			.attr('width', fc_width)
-			.attr('height', 500)
-			.attr('id', 'c-region-map');
-	
-		var counties = svg.append('g')
-				.attr('width', fc_width)
-				.attr('height', 500)
-				.attr('id', 'counties');
-		var county_labels_outlines = svg.append('g')
-				.attr('width', fc_width)
-				.attr('height', 500)
-				.attr('id', 'cty_labels_outlines');
-		var county_labels = svg.append('g')
-				.attr('width', fc_width)
-				.attr('height', 500)
-				.attr('id', 'cty_labels');
-		var cty_projection = d3.geo.mercator().scale(1).translate([0, 0]).precision(0);
-
-        var cty_path = d3.geo.path().projection(cty_projection);
-        var bounds = cty_path.bounds(county_geo);
-
-        var c_scale = 1 / Math.max((bounds[1][0] - bounds[0][0]) / (fc_width), ((bounds[1][1] - bounds[0][1]) / 500));
-
-        var transl = [(fc_width - c_scale * (bounds[1][0] + bounds[0][0])) / 2, (500 - c_scale * (bounds[1][1] + bounds[0][1])) / 2];
-
-        cty_projection.scale(c_scale).translate(transl);
-
-		counties.selectAll('path')
-			.data(county_geo.features) 
-			.enter().append('path')
-			.filter(function(d) { return d.properties.NAME.toLowerCase() === county ;})
-				.attr('d', cty_path)
-				.attr('id', function(d) { return 'c-'+d.properties.NAME.toLowerCase();})
-				.attr('class','county_outlines');
-
-/*
-
-
+		$('#c-fc-map-wrapper').empty();
+		d3.selectAll("#c-fc-map-wrapper > svg > *").remove();
+		
 		fc_width = $('#c-fc-map-wrapper').width();
 		
 		var fc_svg = d3.select('#c-fc-map-wrapper').append('svg')
 			.attr('width', fc_width)
-				.attr('height', 430)
-				.attr('id', 'c-fc-map');
-
+			.attr('height', 500);
+	
 		var fc_county = fc_svg.append('g')
 				.attr('width', fc_width)
-				.attr('height', 430)
-				.attr('id', 'c-fc-county');
+				.attr('height', 500)
+				.attr('id', 'fc-counties');
 
-		var c_projection = d3.geo.mercator().scale(1).translate([0, 0]).precision(0);
+		var fc_circles = fc_svg.append('g')
+				.attr('width', fc_width)
+				.attr('height', 500)
+				.attr('id', 'fc-centers');
 
-        var c_path = d3.geo.path().projection(c_projection);
-        
-        var bounds = c_path.bounds(county_geo);
+		var defs = fc_svg.append("defs");
 
+		var filter = defs.append("filter")
+		  	.attr("id", "dropshadow");
 
-        var scale_width = (bounds[1][0] - bounds[0][0] - 15) / (fc_width-50),
-				scale_height = (bounds[1][1] - bounds[0][1]) / 430,
-				scale_level = scale_width > scale_height ? (900 / scale_width) : 900,
-				scale_multiplier = scale_width > scale_height ? scale_width : 1;
+		filter.append("feGaussianBlur")
+			.attr("in", "SourceAlpha")
+			.attr("stdDeviation", 3)
+			.attr("result", "blur");
+		filter.append("feOffset")
+			.attr("in", "blur")
+			.attr("dx", 0)
+			.attr("dy", 0)
+			.attr("result", "offsetBlur");
 
-        var fc_scale = 1 / Math.max((bounds[1][0] - bounds[0][0]) / (fc_width), ((bounds[1][1] - bounds[0][1]) / fc_width));
+		var feMerge = filter.append("feMerge");
 
-        var fc_transl = [(fc_width - fc_scale * (bounds[1][0] + bounds[0][0])) / 2, (fc_width - fc_scale * (bounds[1][1] + bounds[0][1])) / 2];
+		feMerge.append("feMergeNode")
+			.attr("in", "offsetBlur");
+		feMerge.append("feMergeNode")
+		  	.attr("in", "SourceGraphic");
+		
+		fc_projection = d3.geo.mercator().scale(1).translate([0, 0]).precision(0);
 
-        //c_projection.scale(fc_scale).translate(fc_transl);
-        
+        var fc_path = d3.geo.path().projection(fc_projection);
+       
+        var fc_bounds = fc_path.bounds(get_county(county_geo));
 
-        offset = ((1/scale_multiplier)*(bounds[1][0] - bounds[0][0]))/2;
-			
-		var transl = [offset, 430 / 2];
+        var fc_scale = 0.96 / Math.max((fc_bounds[1][0] - fc_bounds[0][0]) / (fc_width), ((fc_bounds[1][1] - fc_bounds[0][1]) / 500));
 
-		//c_projection.scale(scale_level).translate(transl);
+        var fc_transl = [(fc_width - fc_scale * (fc_bounds[1][0] + fc_bounds[0][0])) / 2, (500 - fc_scale * (fc_bounds[1][1] + fc_bounds[0][1])) / 2];
+
+        fc_projection.scale(fc_scale).translate(fc_transl);
 
 		fc_county.selectAll('path')
-				.data(county_geo)
-				.enter().append('path')
-				.attr('d', c_path)
-				.attr('class','county_outlines');*/
+			.data(county_geo.features) 
+			.enter().append('path')
+			.filter(function(d) { return d.properties.NAME.toLowerCase() === county ;})
+				.attr('d', fc_path)
+				.attr('class','fc-county-outline');
+				//.attr("filter", "url(#dropshadow)");
+
+		populate_centers();
+	}
+
+	function populate_centers(){
+		if(fc_centers.length < 1){
+			d3.csv('data/d3/freight_centers.csv', function(f_centers){
+				add_centers(f_centers);
+				fc_centers = f_centers;
+			});
+		}else{
+			add_centers(fc_centers);
+		}
+	}
+
+	function add_centers(fc){
+        for (var i = 0; i < fc.length; i++) {
+            if(fc[i].County.toLowerCase() === county){
+	            var center = fc[i];
+
+
+	            var fcxy = fc_projection([center.lon, center.lat]);
+
+	            var fc_element = d3.select('#fc-centers').append('g')
+	                .attr('transform', 'translate(' + Math.round(fcxy[0]) + ',' + Math.round(fcxy[1]) + ')')
+	                .attr('r', 12)
+	                .attr('id', 'FC' + center.id);
+
+	            fc_element.append('circle')
+	                .attr('r', 12)
+	                .attr('class', 'fc-freight-center');
+            }
+        }
+	}
+
+	function size_centers(metric){
 
 	}
+
+	//setting for shadows on svg
+	
+
+
+
+
 
 	// ********************************
 	// domestic trade tool map function

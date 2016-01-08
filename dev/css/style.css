@@ -2740,6 +2740,8 @@ h4.panel-title a i:hover{
     stroke: #3172B8;
     stroke-width: 2px;
 }
+
+
 .port circle {
     fill: #848484;
 }
@@ -3269,6 +3271,37 @@ svg.c-stat-icon .st0{
     background-color: #efefef;
     padding: 3px 10px;
 }
+
+path.fc-county-outline{
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill-rule: evenodd;
+    stroke: #396AB2;
+    stroke-opacity: 1;
+    stroke-width: 2px;
+    fill: #E2E2E2;
+    fill-opacity: 1;
+}
+path.fc-county-other{
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill-rule: evenodd;
+    stroke: #396AB2;
+    stroke-opacity: 1;
+    stroke-width: 2px;
+    fill: rgb(57, 106, 178);
+    fill-opacity: 1;
+    /*transition: fill-opacity 250ms ease-in-out;*/
+}
+#fc-centers circle{
+    cursor: pointer;
+    fill: #312867;
+    stroke: #322968;
+    stroke-width: 2px;
+    fill-opacity: 0.4;
+    
+}
+
 .dkblue-ln{border-bottom-color: #312B6A}
 .stat-block{
     background-color:#ffffff;
