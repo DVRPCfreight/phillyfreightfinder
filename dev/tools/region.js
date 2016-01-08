@@ -75,7 +75,7 @@ function load_region(){
 
 	
 	$('.c-step-item').css('width', navigation_width+'px');
-	$('.c-step-line').css('width', navigation_width*2+'px').css('transform','translate('+ line_width +'px, 0)');
+	$('.c-step-line').css('width', navigation_width*1+'px').css('transform','translate('+ line_width +'px, 0)');
 
 	$('#c-region-nav').fadeIn('slow');
 	//******************************
@@ -178,18 +178,18 @@ function load_region(){
 			case 'network':
 				$('.c-nav-left').hide();
 				$('.c-nav-right').show();
-				$('#c-nav-right-label').html('Freight Centers');
+				$('#c-nav-right-label').html('Domestic Trade');
 				break;
-			case 'freight_centers':
+			/*case 'freight_centers':
 				$('.c-nav-left').show();
 				$('.c-nav-right').show();
 				$('#c-nav-left-label').html('Network');
 				$('#c-nav-right-label').html('Domestic Trade');
-				break;
+				break;*/
 			case 'domestic_trade':
 				$('.c-nav-left').show();
 				$('.c-nav-right').hide();
-				$('#c-nav-left-label').html('Freight Centers');
+				$('#c-nav-left-label').html('Network');
 				break;
 		} 
 	}
@@ -207,9 +207,9 @@ function load_region(){
 				county_data = data;
 				populateNetwork();
 			});
-		}else{ populateNetwork(); }
-		
+		}else{ populateNetwork(); }	
 	}
+
 	function populateNetwork(){
 		for(var i=0; i<county_data.length; i++) {
             if (county_data[i].NAME === capitalizeFirstLetter(county)) {
