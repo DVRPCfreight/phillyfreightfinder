@@ -217,7 +217,11 @@ function load_region(){
                 	county_ref = i;
                 if(parseInt(cdata.portTermin) === 0){$('#c-stat-maritime').hide();}else{$('#c-stat-maritime').show();}
                 for(var j=0; j<stat_data.length; j++) {
-                	$('.c-data-'+stat_data[j]).html(cdata[stat_data[j]]);
+                	if(stat_data[j] === 'centerEmp'){
+                		$('.c-data-'+stat_data[j]).html( numeral(round((cdata[stat_data[j]]*0.001),1)).format('0,0.0') + ' k');
+                	}else{
+                		$('.c-data-'+stat_data[j]).html(cdata[stat_data[j]]);
+                	}
                 }
                 $('.c-image-caption').html(cdata.zero);
                 $('#cty-pic-slider').removeData("flexslider");

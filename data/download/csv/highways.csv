@@ -32,3 +32,29 @@ HWY14,T,276,PA,I 276 (Pennsylvania Turnpike),Interstate Highway,Pennsylvania Tur
 HWY15,T,276,PA,I 276 (Pennsylvania Turnpike),Interstate Highway,Pennsylvania Turnpike Commission,13.554977,276,WB,3,n/a,n/a,,EB,3,n/a,n/a,,0,,276,27.107147
 HWY64,I,95,NJ,I 95,Interstate Highway,PennDOT,14.435724,95,NB,2,n/a,n/a,,SB,2,n/a,n/a,,0,,95,28.913633
 HWY27,I,476,PA,I 476,Interstate Highway,PennDOT,3.828654,476,NB,3,n/a,n/a,,SB,3,n/a,n/a,,0,,476,10.723945
+HWY1,U,1,NJ,US 1 (Trenton Freeway),Limited Access Highway,PennDOT,5.190281,1,NB,2,1833,7.4%,65388,SB,2,2189,9.3%,65389,2011,DVRPC,1,10.375086
+HWY32,S,63,PA,PA 63 (Woodhaven Road),Limited Access Highway,PennDOT,3.227361,63,WB,3,n/a,n/a,,EB,3,n/a,n/a,,0,,63,6.437009
+HWY7,U,1Kennet,PA,US 1 (Kennet Oxfrd Bypass),Limited Access Highway,PennDOT,22.527338,1,NB,2,1037,10.2%,69645,SB,2,944,9.0%,69646,2010,DVRPC,1,22.527338
+HWY8,U,1Media,PA,US 1 (Media Bypass),Limited Access Highway,PennDOT,5.729338,1,NB,2,n/a,n/a,,SB,2,n/a,n/a,,0,,1,5.729345
+HWY6,U,1Blvd,PA,US 1 (Roosevelt Blvd),Limited Access Highway,PennDOT,3.117826,1,NB,3,n/a,n/a,,SB,3,n/a,n/a,,0,,1,3.567132
+HWY9,U,1Super,PA,US 1,Limited Access Highway,PennDOT,14.444119,1,NB,2,n/a,n/a,,SB,2,n/a,n/a,,0,,1,14.431061
+HWY21,U,30,NJ,US 30 (Admiral Wilson Blvd),Limited Access Highway,NJDOT,1.973362,30,WB,4,n/a,n/a,,EB,4,n/a,n/a,,0,,30,2.124824
+HWY57,T,NJTPK,NJ,New Jersey Turnpike,Limited Access Highway,New Jersey Turnpike Authority,16.40651,0,NB,3,n/a,n/a,,SB,3,n/a,n/a,,0,,njtpk,34.536415
+HWY58,T,NJTPK,NJ,New Jersey Turnpike,Limited Access Highway,New Jersey Turnpike Authority,8.350597,0,NB,2,n/a,n/a,,SB,2,n/a,n/a,,0,,njtpk,16.707166
+HWY59,T,NJTPK,NJ,New Jersey Turnpike,Limited Access Highway,New Jersey Turnpike Authority,13.272583,0,NB,2,n/a,n/a,,SB,2,n/a,n/a,,0,,njtpk,26.539176
+HWY60,T,NJTPK,NJ,New Jersey Turnpike,Limited Access Highway,New Jersey Turnpike Authority,4.992045,0,NB,2,n/a,n/a,,SB,2,n/a,n/a,,0,,njtpk,9.99106
+HWY62,U,322,PA,US 322,Limited Access Highway,PennDOT,4.245424,322,WB,3,n/a,n/a,,EB,2,n/a,n/a,,0,,322,0
+HWY61,U,130,NJ,US 130,Limited Access Highway,NJDOT,2.281342,130,NB,2,n/a,n/a,,SB,2,n/a,n/a,,2013,DVRPC,130,0
+HWY63,U,322,NJ,US 322,Limited Access Highway,NJDOT,4.245424,322,WB,3,n/a,n/a,,EB,2,n/a,n/a,,0,,322,0
+HWY31,S,55,NJ,NJ 55,Limited Access Highway,NJDOT,22.01031,55,NB,2,n/a,n/a,,SB,2,n/a,n/a,,0,,55,44.166783
+HWY41,S,90,NJ,NJ 90,Limited Access Highway,DRPA,3.343837,0,WB,3,n/a,n/a,,EB,3,n/a,n/a,,0,,n90,6.714339
+HWY42,S,90,PA,PA 90,Limited Access Highway,PennDOT,1.143627,90,WB,3,n/a,n/a,,EB,3,n/a,n/a,,0,,90,1.650674
+HWY24,U,422,PA,US 422 (Pottstown Expressway),Limited Access Highway,PennDOT,23.362329,422,WB,2,2177,8.0%,69632,EB,2,n/a,n/a,,2010,DVRPC,422,46.775739
+HWY53,T,ACEXPR,NJ,Atlantic City Expressway,Limited Access Highway,South Jersey Transportation Authority,14.562956,0,NB,2,n/a,n/a,,SB,2,n/a,n/a,,0,,acexpr,29.918931
+HWY54,T,GSPKWY,NJ,Garden State Parkway,Limited Access Highway,New Jersey Turnpike Authority,5.133934,0,NB,2,n/a,n/a,,SB,2,n/a,n/a,,0,,gspkwy,10.173112
+HWY4,U,13,PA,US 13 (Bristol Pike),Limited Access Highway,PennDOT,4.021889,13,NB,2,n/a,n/a,,SB,2,n/a,n/a,,0,,13,8.047689
+HWY23,S,42,NJ,NJ 42,Limited Access Highway,NJDOT,7.883522,42,NB,3,n/a,n/a,,SB,3,n/a,n/a,,0,,42,16.060923
+HWY10,U,202,PA,US 202 (West Chester Bypass),Limited Access Highway,PennDOT,18.319319,202,NB,2,n/a,n/a,,SB,2,n/a,n/a,,0,,202,18.313872
+HWY2,S,100,PA,PA 100 (South Pottstown Pike),Limited Access Highway,PennDOT,2.926595,100,NB,2,n/a,n/a,,SB,2,n/a,n/a,,0,,100,5.698858
+HWY20,U,30,PA,US 30 (Exton Bypass),Limited Access Highway,PennDOT,18.808504,30,WB,2,n/a,n/a,,EB,2,n/a,n/a,,0,,30,39.230001
+HWY22,S,309,PA,PA 309 (Fort Washington Expressway),Limited Access Highway,PennDOT,11.905132,309,NB,2,n/a,n/a,,SB,2,n/a,n/a,,0,,309,22.655732
