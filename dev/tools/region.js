@@ -44,7 +44,7 @@ function load_region(){
 		county = 'none', 
 		target = 'network',
 		dt_width = $('#content').width(), 
-		singleComm, bLabel, commItem, circle_scaler, offset, county_data, county_ref, fc_centers = [], fc_counties = [], fc_projection,
+		singleComm, bLabel, commItem, circle_scaler, offset, county_data, county_ref, fc_economics, fc_co_economics, fc_centers = [], fc_counties = [], fc_projection,
 		numText = {0:'zero',1:'one',2:'two',3:'three',4:'four',5:'five',6:'six',7:'seven'},
 		projection = d3.geo.albersUsa().scale(900).translate([dt_width, 430 / 2]);
 
@@ -517,43 +517,72 @@ function load_region(){
 	function populate_centers(){
 		if(fc_centers.length < 1){
 			d3.csv('data/d3/freight_centers.csv', function(f_centers){
-				add_centers(f_centers);
-				fc_centers = f_centers;
+				d3.csv('data/d3/fc_center_economics.csv', function(economics) {
+					d3.csv('data/d3/fc_county.csv', function(co_economics) {
+						
+						fc_centers = f_centers;
+						fc_economics = economics;
+						fc_co_economics = co_economics;
+						add_centers(fc_centers);
+					});
+				});
 			});
 		}else{
 			add_centers(fc_centers);
 		}
 	}
-
+var county_ids;
 	function add_centers(fc){
+		county_ids = [];
         for (var i = 0; i < fc.length; i++) {
             if(fc[i].County.toLowerCase() === county){
 	            var center = fc[i];
-
-
+	            county_ids.push('FC'+center.Id);
 	            var fcxy = fc_projection([center.lon, center.lat]);
 
 	            var fc_element = d3.select('#fc-centers').append('g')
 	                .attr('transform', 'translate(' + Math.round(fcxy[0]) + ',' + Math.round(fcxy[1]) + ')')
 	                .attr('r', 12)
-	                .attr('id', 'FC' + center.id);
+	                .attr('id', 'FC' + center.id)
+	                .attr('class', 'fc-grabber');
 
 	            fc_element.append('circle')
 	                .attr('r', 12)
 	                .attr('class', 'fc-freight-center');
             }
         }
+        size_centers();
 	}
+	//var metric = 'emp';
 
+	function summarize_data(data, met){
+		var summary = d3.nest()
+		  	.key(function(d) { return d.pffID;})
+		  	.rollup(function(d) { 
+		   		return d3.sum(d, function(g) {return g[met]; });
+		  	})
+		  	.entries(data);
+		return summary;
+	}
 	function size_centers(metric){
-
+		var fc_size_data = [];
+		//add relevant data
+		for(var i = 0; i < fc_economics.length; i++){
+			if(county_ids.indexOf(fc_economics[i].pffID) > -1){
+				fc_size_data.push(fc_economics[i]);
+			}
+		}
+		var summary_data = summarize_data(fc_size_data, 'emp');
+		console.log(summary_data);
 	}
 
 	//setting for shadows on svg
 	
+/*		.rollup(function(d) { 
+		   		return d3.sum(g, function(d) {return d.emp; });
+		  	})
 
-
-
+*/
 
 
 	// ********************************
