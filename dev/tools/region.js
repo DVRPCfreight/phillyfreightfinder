@@ -44,7 +44,7 @@ function load_region(){
 		county = 'none', 
 		target = 'network',
 		dt_width = $('#content').width(), 
-		singleComm, bLabel, commItem, circle_scaler, offset, county_data, county_ref, fc_economics, fc_co_economics, fc_centers = [], fc_counties = [], fc_projection,
+		singleComm, bLabel, commItem, circle_scaler, offset, county_data, county_ref, fc_scale, fc_economics, fc_co_economics, fc_centers = [], fc_counties = [], fc_projection,
 		numText = {0:'zero',1:'one',2:'two',3:'three',4:'four',5:'five',6:'six',7:'seven'},
 		projection = d3.geo.albersUsa().scale(900).translate([dt_width, 430 / 2]);
 
@@ -448,14 +448,14 @@ function load_region(){
 			}
 		}
 	}
-
+var fc_svg;
 	function draw_fc_county(county_geo){
 		$('#c-fc-map-wrapper').empty();
 		d3.selectAll("#c-fc-map-wrapper > svg > *").remove();
 		
 		fc_width = $('#c-fc-map-wrapper').width();
 		
-		var fc_svg = d3.select('#c-fc-map-wrapper').append('svg')
+		fc_svg = d3.select('#c-fc-map-wrapper').append('svg')
 			.attr('width', fc_width)
 			.attr('height', 500);
 	
@@ -497,7 +497,7 @@ function load_region(){
        
         var fc_bounds = fc_path.bounds(get_county(county_geo));
 
-        var fc_scale = 0.96 / Math.max((fc_bounds[1][0] - fc_bounds[0][0]) / (fc_width), ((fc_bounds[1][1] - fc_bounds[0][1]) / 500));
+        fc_scale = 0.96 / Math.max((fc_bounds[1][0] - fc_bounds[0][0]) / (fc_width), ((fc_bounds[1][1] - fc_bounds[0][1]) / 500));
 
         var fc_transl = [(fc_width - fc_scale * (fc_bounds[1][0] + fc_bounds[0][0])) / 2, (500 - fc_scale * (fc_bounds[1][1] + fc_bounds[0][1])) / 2];
 
@@ -543,7 +543,7 @@ var county_ids;
 	            var fc_element = d3.select('#fc-centers').append('g')
 	                .attr('transform', 'translate(' + Math.round(fcxy[0]) + ',' + Math.round(fcxy[1]) + ')')
 	                .attr('r', 12)
-	                .attr('id', 'FC' + center.id)
+	                .attr('id', 'FC' + center.Id)
 	                .attr('class', 'fc-grabber');
 
 	            fc_element.append('circle')
@@ -551,29 +551,92 @@ var county_ids;
 	                .attr('class', 'fc-freight-center');
             }
         }
-        size_centers();
+        var fc_size_data = [];
+		//add relevant data
+		for(var j = 0; j < fc_economics.length; j++){
+
+			if(county_ids.indexOf(fc_economics[j].pffID) > -1){
+				fc_size_data.push(fc_economics[j]);
+			}
+		}
+		
+		var summary_data = summarize_data(fc_size_data);
+
+        size_centers(summary_data);
 	}
-	//var metric = 'emp';
+	var metric = 'emp';
 
 	function summarize_data(data, met){
 		var summary = d3.nest()
 		  	.key(function(d) { return d.pffID;})
 		  	.rollup(function(d) { 
-		   		return d3.sum(d, function(g) {return g[met]; });
+		   		return {
+		   			emp: d3.sum(d, function(g) {return g.emp; }),
+		   			est: d3.sum(d, function(g) {return g.est; })
+		   		};
 		  	})
 		  	.entries(data);
 		return summary;
 	}
-	function size_centers(metric){
-		var fc_size_data = [];
-		//add relevant data
-		for(var i = 0; i < fc_economics.length; i++){
-			if(county_ids.indexOf(fc_economics[i].pffID) > -1){
-				fc_size_data.push(fc_economics[i]);
+	
+	function size_centers(sum_data){ 
+
+		var fc_max, fc_min, fc_range =[], fc_c_scale;
+		for(var l = 0; l < sum_data.length; l++){
+			var vc = sum_data[l];
+			if(metric === 'emp'){
+				fc_range.push(vc.values.emp);
+
+			}else if(metric === 'est'){
+				fc_range.push(vc.values.est);
 			}
 		}
-		var summary_data = summarize_data(fc_size_data, 'emp');
-		console.log(summary_data);
+		
+		fc_min = d3.min(fc_range);
+		fc_max = d3.max(fc_range);
+		fc_c_scale = d3.scale.pow()
+				//.exponent(0.1)
+				.domain([fc_min, fc_max])
+				.range([10, 60]);
+
+		if(metric === 'emp'){
+			sum_data.sort(function(a,b){return b.values.emp - a.values.emp;});
+		}
+
+		for(var i = 0; i < sum_data.length; i++){
+			var fc = sum_data[i], r, fc_num;
+			
+			if(metric === 'emp'){
+				r = fc_c_scale(fc.values.emp);
+			}else if(metric === 'est'){
+				r = fc_c_scale(fc.values.est);
+			}
+
+			
+			var fc_elem = d3.select('#' + fc.key);
+
+			fc_elem.moveToFront();
+			fc_elem.classed('prevSelection', false);
+			fc_elem.classed('sel_related', true)
+				.attr('r', r)
+				.select('circle')
+					.transition()
+					.duration(500)
+						.attr('r', r)
+						.attr('i', r)
+						.attr('id', fc.key);
+			fc_elem.append('text')
+					.attr('class', 'fc-label-qty')
+					.text(fc.values.emp)
+                    .attr('fill','#636363')
+                    .attr("text-anchor", "middle");
+		}
+
+		d3.selectAll('#fc-centers circle.fc-freight-center')
+			.on('click', function(e) {
+				console.log(d3.select(this));
+			});
+					
 	}
 
 	//setting for shadows on svg
@@ -583,7 +646,7 @@ var county_ids;
 		  	})
 
 */
-
+d3.selection.prototype.moveToFront = function() { return this.each(function() { this.parentNode.appendChild(this); }); };
 
 	// ********************************
 	// domestic trade tool map function
