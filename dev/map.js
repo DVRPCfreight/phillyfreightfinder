@@ -23,7 +23,8 @@ var map, map2, countySearch = [],
     FCinterSearch = [],
     FCmajorSearch = [],
     FCmegaSearch = [],
-    mcountyPrint = [];
+    mcountyPrint = [],
+    fc_data_action= [];
 //countyMap
 //county maps
 /*var Stamen_TonerBackground = L.tileLayer('http://{s}.tile.stamen.com/toner-background/{z}/{x}/{y}.png', {
@@ -1703,6 +1704,20 @@ function loadLayers (){
         $.getJSON("data/good_neighbor_pts.js", function(data) {
             fgneighbor.addData(data);
         });
+
+        //preload the fc data
+        d3.csv('data/d3/fc_center_economics.csv', function(f_data) {
+            var fc_items = d3.nest()
+                .key(function(d) { return d.pffID;})
+                .rollup(function(d) { 
+                    return {
+                        emp: d3.sum(d, function(g) {return g.emp; }),
+                        est: d3.sum(d, function(g) {return g.est; })
+                    };
+                })
+                .entries(f_data);
+            fc_data_action = fc_items;    
+        });  
         
         //set checkbox status
         $('.legPanel').each(function(){

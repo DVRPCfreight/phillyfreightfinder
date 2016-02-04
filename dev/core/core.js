@@ -92,6 +92,7 @@ $(window).bind('hashchange', function() {
         if(tab_id === 'map?search'){
             $('#search-panel').fadeIn('fast');
             location.hash = '#map';
+            document.title = 'PhillyFreightFinder Map';
         }else if (tab_id != 'map') {
         	$('.mapUI').fadeOut('fast', 'easeOutQuad' , function (){
                 $('.landingUI').fadeIn('fast', 'easeInQuad' );
@@ -108,6 +109,9 @@ $(window).bind('hashchange', function() {
         }else{ 
            setMap();
         }
+        /*var path = window.location.hash || evt.currentTarget.pathname + evt.currentTarget.hash;
+        var title = document.title; //evt.currentTarget.title || evt.currentTarget.text;
+        gaTrack(path, title);*/
     
 });
 

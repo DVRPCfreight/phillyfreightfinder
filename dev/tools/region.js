@@ -31,6 +31,8 @@ $(function() {
 
 	var	line_width = ((navigation_width / 2) * 3) + 18;
 
+	
+
 
 function load_region(){
 	//****************************

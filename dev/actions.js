@@ -248,10 +248,10 @@ function clkIntermodal(e) {
 };
 //rail river crossing
 function clkRailRvrXing(e) {
-    initializeHL(e);
+    initializeHL(e);            
     header = '<p>' + props.NAME + '</p>',
     content = "<div id='baseInfo'>"
-                        +"<div class='datafield'>" + findMatch(railines, props.LINK_ID) + "</div><div class='labelfield'>Rail Line</div>"
+                        +"<div class='datafield'>" + props.LINE /*findMatch(railines, props.LINK_ID)*/ + "</div><div class='labelfield'>Rail Line</div>"
                         +"<div class='datafield'>" + props.OWNER + "</div><div class='labelfield'>Owner</div>"
                         +"<div class='datafield'>" + props.OPERATOR + "</div><div class='labelfield'>Operator(s)</div>"
                         +"<div class='datafield'>" + props.TYPE + "</div><div class='labelfield'>Bridge Type</div>"
@@ -386,6 +386,33 @@ function clkriver(e) {
     contentPush(header,content,featureName,featureClass,featureIcon);
 };
 
+//FC data processing
+function populate_fc(fc, src, fetch_data){
+    
+    
+    
+}
+function getFCdata(fc, source){
+    for(var i = 0; i < fc_data_action.length; i++){
+        if(fc_data_action[i].key === fc){
+            //cosole.log(fc_data[i]);
+            return numeral(fc_data_action[i].values[source]).format('0,0');
+        }
+    }
+    /*var datavalue = '';
+    
+        if(fc_data_action.length < 1){
+               
+        }else{
+            return populate_fc(fc, source, fc_data_action);
+        }
+        //return datavalue;*/
+
+    
+    
+
+}
+
 //Freight Centers
 function clkFreightCenter(e) {
     initializeHL(e);
@@ -402,10 +429,11 @@ function clkFreightCenter(e) {
                         +"<div id='indicator' class='tab-content'><!--tab panes-->"
                         +"<div class='tab-pane active' id='Cap' style='padding-bottom: 12px;'>"
                                 +"<table class='table table-hover'>"
-                                +"<tr class='active'><td><strong>Acres: </strong></td><td>" + numeral(props.ACRES_1).format('0,0.0') + "</td></tr>"
-                                +"<tr class='active'><td><strong>Output: </strong></td><td>not available</td></tr></table>"
+                                +"<tr class='active'><td><strong>Employment: </strong></td><td>"+ getFCdata(props.PFF_ID, 'emp') +"</td></tr>"
+                                +"<tr class='active'><td><strong>Establishments: </strong></td><td>"+ getFCdata(props.PFF_ID, 'est') +"</td></tr>"
+                                +"<tr class='active'><td><strong>Acres: </strong></td><td>" + numeral(props.ACRES_1).format('0,0.0') + "</td></tr></table>"
                         +"</div></div>"
-                        +"<div class='labelfield source'>Data Source: " + props.SOURCE + "</div></div>";
+                        +"<div class='labelfield source'>Data Source: 2015 DVRPC, 2012 NETS</div></div>";
                         // +"<p>" + props.REPORT + "</p>";
     if (props.CENTER_TYP === 'Intermediate'){
             fclass = 'fcinter';
