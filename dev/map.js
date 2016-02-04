@@ -586,6 +586,11 @@ var commicon = L.OpenFreightMarkers.icon({
                         weight: 5,
                         opacity: 0.90
                     };
+                default :
+                    return{
+                        opacity: 0,
+                        weight: 0
+                    };
             }
         },
         onEachFeature: function(feature, layer) {

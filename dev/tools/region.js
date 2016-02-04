@@ -448,7 +448,7 @@ function load_region(){
 			}
 		}
 	}
-var fc_svg;
+var fc_svg, fc_path, county_ids=[];
 	function draw_fc_county(county_geo){
 		$('#c-fc-map-wrapper').empty();
 		d3.selectAll("#c-fc-map-wrapper > svg > *").remove();
@@ -493,7 +493,7 @@ var fc_svg;
 		
 		fc_projection = d3.geo.mercator().scale(1).translate([0, 0]).precision(0);
 
-        var fc_path = d3.geo.path().projection(fc_projection);
+        fc_path = d3.geo.path().projection(fc_projection);
        
         var fc_bounds = fc_path.bounds(get_county(county_geo));
 
@@ -531,7 +531,7 @@ var fc_svg;
 			add_centers(fc_centers);
 		}
 	}
-var county_ids;
+
 	function add_centers(fc){
 		county_ids = [];
         for (var i = 0; i < fc.length; i++) {
@@ -564,7 +564,7 @@ var county_ids;
 
         size_centers(summary_data);
 	}
-	var metric = 'emp';
+	var metric = 'est';
 
 	function summarize_data(data, met){
 		var summary = d3.nest()
@@ -584,12 +584,7 @@ var county_ids;
 		var fc_max, fc_min, fc_range =[], fc_c_scale;
 		for(var l = 0; l < sum_data.length; l++){
 			var vc = sum_data[l];
-			if(metric === 'emp'){
-				fc_range.push(vc.values.emp);
-
-			}else if(metric === 'est'){
-				fc_range.push(vc.values.est);
-			}
+			fc_range.push(vc.values[metric]);
 		}
 		
 		fc_min = d3.min(fc_range);
@@ -597,19 +592,19 @@ var county_ids;
 		fc_c_scale = d3.scale.pow()
 				//.exponent(0.1)
 				.domain([fc_min, fc_max])
-				.range([10, 60]);
+				.range([15, 65]);
 
-		if(metric === 'emp'){
-			sum_data.sort(function(a,b){return b.values.emp - a.values.emp;});
-		}
+		
+		sum_data.sort(function(a,b){return b.values[metric] - a.values[metric];});
+		
 
 		for(var i = 0; i < sum_data.length; i++){
-			var fc = sum_data[i], r, fc_num;
-			
+			var fc = sum_data[i], r, fc_num, fc_label;
+			r = fc_c_scale(fc.values[metric]);
 			if(metric === 'emp'){
-				r = fc_c_scale(fc.values.emp);
+				fc_label = numeral(round((fc.values.emp*0.001),1)).format('0,0.0')+' k';
 			}else if(metric === 'est'){
-				r = fc_c_scale(fc.values.est);
+				fc_label = numeral(round((fc.values.est),1)).format('0,0');
 			}
 
 			
@@ -625,11 +620,19 @@ var county_ids;
 						.attr('r', r)
 						.attr('i', r)
 						.attr('id', fc.key);
+
 			fc_elem.append('text')
-					.attr('class', 'fc-label-qty')
-					.text(fc.values.emp)
-                    .attr('fill','#636363')
+					.attr('class', 'c-fc-labels-outline')
+					.text(fc_label)
+					.attr('transform', 'translate(0,5)')
                     .attr("text-anchor", "middle");
+			
+			fc_elem.append('text')
+					.attr('class', 'c-fc-labels')
+					.text(fc_label)
+					.attr('transform', 'translate(0,5)')
+                    .attr("text-anchor", "middle");
+            
 		}
 
 		d3.selectAll('#fc-centers circle.fc-freight-center')

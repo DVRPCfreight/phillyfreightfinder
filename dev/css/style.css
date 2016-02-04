@@ -3003,32 +3003,41 @@ path.county_outlines{
     stroke-width: 5px;
     fill-opacity: 0.8;  
 }*/
-.c-county-label {
-    font-size: .85em;
+.c-county-label, .c-fc-labels {
     fill:#ffffff;
     text-anchor: middle;
     stroke-width:0px;
     cursor: none;
     pointer-events: none;
     font-weight: 600;
+}
+.c-county-label{
+    font-size: .85em;
     text-transform: uppercase;
 }
-.c-county-label-outline {
-    font-size: .85em;
-    stroke: #396AB2;
-    stroke-width: 5px;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+.c-fc-labels{
+    font-size:.95em;
+}
+.c-county-label-outline, .c-fc-labels-outline {
     text-anchor: middle;
     cursor: none;
     pointer-events: none;
     paint-order: stroke;
-    stroke: #396AB2;
+   
     stroke-width: 5px;
     stroke-linecap: round;
     stroke-linejoin: round;
     font-weight: 600;
+   
+}
+.c-county-label-outline{
+    font-size: .85em;
     text-transform: uppercase;
+    stroke: #396AB2;
+}
+.c-fc-labels-outline{
+    font-size: .95em;
+    stroke: #312867;
 }
 
 .highlight-block{
